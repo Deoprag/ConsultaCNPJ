@@ -8,7 +8,8 @@
 }
 
 body {
-  background-color: #222;
+  background: url("assets/background.jpeg"), #f542ad;
+  background-size: cover;
   font-family: 'Smooch Sans', sans-serif;
 }
 
