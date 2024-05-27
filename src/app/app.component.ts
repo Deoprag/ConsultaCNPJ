@@ -99,7 +99,7 @@ import {DividerModule} from "primeng/divider";
           <label id="ultima_atualizacao" class="text-md w-full">{{ formatDateTime(consulta.ultima_atualizacao) }}</label>
         </div>
       </p-dialog>
-      <div class="flex flex-column gap-5 text-white bg-black-alpha-60 border-3 w-4 p-5 text-center border-round-lg">
+      <div class="flex flex-column gap-5 text-white bg-white-alpha-70 border-1 w-4 p-5 text-center border-round-lg">
         <div>
           <label class="text-7xl font-bold text-pink-500" for="cnpj">Consultar CNPJ</label>
         </div>
