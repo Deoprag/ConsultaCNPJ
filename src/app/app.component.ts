@@ -28,78 +28,81 @@ import {DividerModule} from "primeng/divider";
   template: `
     <p-toast/>
     <div class="flex justify-content-center">
-      <p-dialog header="Dados do CPNJ" [modal]="true" [(visible)]="visible" [style]="{ width: '35rem', padding: '2rem', background: 'white'}">
-        <div class="flex align-items-center gap-3 m-3">
-          <label for="cnpj" class="font-semibold w-9rem">CNPJ</label>
-          <label id="cnpj" class="text-md w-full">{{ consulta.cnpj }}</label>
+      <p-dialog header="Dados do CPNJ" [modal]="true" [(visible)]="visible" [style]="{
+      width: '400px',
+      padding: '2rem',
+      background: 'white'}">
+        <div class="flex align-items-center gap-2 mt-3 mb-3 flex-wrap">
+          <label for="cnpj" class="font-semibold">CNPJ</label>
+          <label id="cnpj" class="text-md w-full">{{ formatCNPJ(consulta.cnpj) }}</label>
         </div>
         <p-divider></p-divider>
-        <div class="flex align-items-center gap-3 m-3">
-          <label for="razao_social" class="font-semibold w-9rem">Razão Social</label>
+        <div class="flex align-items-center gap-2 mt-3 mb-3 flex-wrap">
+          <label for="razao_social" class="font-semibold">Razão Social</label>
           <label id="razao_social" class="text-md w-full">{{ consulta.razao_social }}</label>
         </div>
         <p-divider></p-divider>
-        <div class="flex align-items-center gap-3 m-3">
-          <label for="nome_fantasia" class="font-semibold w-9rem">Nome Fantasia</label>
+        <div class="flex align-items-center gap-2 mt-3 mb-3 flex-wrap">
+          <label for="nome_fantasia" class="font-semibold">Nome Fantasia</label>
           <label id="nome_fantasia" class="text-md w-full">{{ consulta.nome_fantasia }}</label>
         </div>
         <p-divider></p-divider>
-        <div class="flex align-items-center gap-3 m-3">
-          <label for="situacao" class="font-semibold w-9rem">Situação</label>
+        <div class="flex align-items-center gap-2 mt-3 mb-3 flex-wrap">
+          <label for="situacao" class="font-semibold">Situação</label>
           <label id="situacao" class="text-md w-full">{{ consulta.situacao }}</label>
         </div>
         <p-divider></p-divider>
-        <div class="flex align-items-center gap-3 m-3">
-          <label for="data_situacao" class="font-semibold w-9rem">Data Situação</label>
+        <div class="flex align-items-center gap-2 mt-3 mb-3 flex-wrap">
+          <label for="data_situacao" class="font-semibold">Data Situação</label>
           <label id="data_situacao" class="text-md w-full">{{ formatDate(consulta.data_situacao) }}</label>
         </div>
         <p-divider></p-divider>
-        <div class="flex align-items-center gap-3 m-3">
-          <label for="telefone" class="font-semibold w-9rem">Telefone</label>
+        <div class="flex align-items-center gap-2 mt-3 mb-3 flex-wrap">
+          <label for="telefone" class="font-semibold">Telefone</label>
           <label id="telefone" class="text-md w-full">{{ formatNumber(consulta.telefone) }}</label>
         </div>
         <p-divider></p-divider>
-        <div class="flex align-items-center gap-3 m-3">
-          <label for="telefone" class="font-semibold w-9rem">Email</label>
+        <div class="flex align-items-center gap-2 mt-3 mb-3 flex-wrap">
+          <label for="telefone" class="font-semibold">Email</label>
           <label id="telefone" class="text-md w-full">{{ consulta.email }}</label>
         </div>
         <p-divider></p-divider>
-        <div class="flex align-items-center gap-3 m-3">
-          <label for="porte" class="font-semibold w-9rem">Porte</label>
+        <div class="flex align-items-center gap-2 mt-3 mb-3 flex-wrap">
+          <label for="porte" class="font-semibold">Porte</label>
           <label id="porte" class="text-md w-full">{{ consulta.porte }}</label>
         </div>
         <p-divider></p-divider>
-        <div class="flex align-items-center gap-3 m-3">
-          <label for="tipo" class="font-semibold w-9rem">Tipo</label>
+        <div class="flex align-items-center gap-2 mt-3 mb-3 flex-wrap">
+          <label for="tipo" class="font-semibold">Tipo</label>
           <label id="tipo" class="text-md w-full">{{ consulta.tipo }}</label>
         </div>
         <p-divider></p-divider>
-        <div class="flex align-items-center gap-3 m-3">
-          <label for="atividade_principal" class="font-semibold w-9rem">Atividade Principal</label>
+        <div class="flex align-items-center gap-2 mt-3 mb-3 flex-wrap">
+          <label for="atividade_principal" class="font-semibold">Atividade Principal</label>
           <label id="atividade_principal" class="text-md w-full">{{ consulta.atividade_principal }}</label>
         </div>
         <p-divider></p-divider>
-        <div class="flex align-items-center gap-3 m-3">
-          <label for="atividades_secundarias" class="font-semibold w-9rem">Atividades Secundárias</label>
+        <div class="flex align-items-center gap-2 mt-3 mb-3 flex-wrap">
+          <label for="atividades_secundarias" class="font-semibold">Atividades Secundárias</label>
           <label id="atividades_secundarias" class="text-md w-full">{{ consulta.atividades_secundarias }}</label>
         </div>
         <p-divider></p-divider>
-        <div class="flex align-items-center gap-3 m-3">
-          <label for="endereco" class="font-semibold w-9rem">Endereço</label>
+        <div class="flex align-items-center gap-2 mt-3 mb-3 flex-wrap">
+          <label for="endereco" class="font-semibold">Endereço</label>
           <label id="endereco" class="text-md w-full">{{ consulta.endereco }}</label>
         </div>
         <p-divider></p-divider>
-        <div class="flex align-items-center gap-3 m-3">
-          <label for="data_abertura" class="font-semibold w-9rem">Data de Abertura</label>
+        <div class="flex align-items-center gap-2 mt-3 mb-3 flex-wrap">
+          <label for="data_abertura" class="font-semibold">Data de Abertura</label>
           <label id="data_abertura" class="text-md w-full">{{ formatDate(consulta.data_abertura) }}</label>
         </div>
         <p-divider></p-divider>
-        <div class="flex align-items-center gap-3 m-3">
-          <label for="ultima_atualizacao" class="font-semibold w-9rem">Última Atualização</label>
+        <div class="flex align-items-center gap-2 mt-3 mb-3 flex-wrap">
+          <label for="ultima_atualizacao" class="font-semibold">Última Atualização</label>
           <label id="ultima_atualizacao" class="text-md w-full">{{ formatDateTime(consulta.ultima_atualizacao) }}</label>
         </div>
       </p-dialog>
-      <div class="flex flex-column gap-5 text-white bg-white-alpha-70 border-1 w-4 p-5 text-center border-round-lg">
+      <div class="flex flex-column gap-5 text-white bg-white-alpha-70 border-1 p-5 text-center border-round-lg">
         <div>
           <label class="text-7xl font-bold text-pink-500" for="cnpj">Consultar CNPJ</label>
         </div>
@@ -112,7 +115,7 @@ import {DividerModule} from "primeng/divider";
             [style]="{
               'max-width':'80%',
               'min-height':'45px',
-              'font-size':'24px',
+              'font-size':'20px',
               'text-align':'center',
               'color':'#f542ad',
               'font-weight':'bold'}">
@@ -150,8 +153,18 @@ export class AppComponent {
   loading: boolean = false;
   visible: boolean = false;
   consulta: Consulta = new Consulta();
+  backgrounds: string[] = ['../assets/barbie-fairy.jpg', '../assets/barbie.jpg', '../assets/barbie-swan-lake.jpg'];
+  i: number = 0;
 
-  constructor(private messageService: MessageService, private consultaService: ConsultaService) {}
+  constructor(private messageService: MessageService, private consultaService: ConsultaService) {
+    setInterval(() => {
+      if (this.i === this.backgrounds.length) {
+        this.i = 0
+      }
+      this.changeBackground(this.backgrounds[this.i]);
+      this.i++;
+    }, 30000);
+  }
 
   showError(message: string) {
     this.messageService.add({ severity: 'error', summary: 'ERRO...', detail: message });
@@ -182,6 +195,12 @@ export class AppComponent {
       this.showError('CNPJ inválido.');
       this.loading = false;
     }
+  }
+
+  changeBackground(background: string) {
+    document.body.style.background = `url(${background}), #f542ad`;
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.transition = 'all 2s !important';
   }
 
   validateCnpj(cnpj: string) {
@@ -246,5 +265,14 @@ export class AppComponent {
     } else {
       return `(${digitos.slice(0, 2)}) ${digitos.slice(2, 6)}-${digitos.slice(6)}`;
     }
+  }
+
+  formatCNPJ(cnpj: string): string {
+    cnpj = cnpj.replace(/\D/g, '');
+
+    return cnpj.replace(
+      /^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/,
+      '$1.$2.$3/$4-$5'
+    );
   }
 }
