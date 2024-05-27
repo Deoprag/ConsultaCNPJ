@@ -153,7 +153,7 @@ export class AppComponent {
   loading: boolean = false;
   visible: boolean = false;
   consulta: Consulta = new Consulta();
-  backgrounds: string[] = ['../assets/barbie-fairy.jpg', '../assets/barbie.jpg', '../assets/barbie-swan-lake.jpg'];
+  backgrounds: string[] = ['../assets/barbie-fairy.jpg', '../assets/barbie-three-musketeers.jpg',  '../assets/barbie-magic-pegasus.jpg',  '../assets/barbie-diamond-castle.jpg', '../assets/barbie.jpg', '../assets/barbie-swan-lake.jpg'];
   i: number = 0;
 
   constructor(private messageService: MessageService, private consultaService: ConsultaService) {
@@ -163,7 +163,7 @@ export class AppComponent {
       }
       this.changeBackground(this.backgrounds[this.i]);
       this.i++;
-    }, 30000);
+    }, 20000);
   }
 
   showError(message: string) {
@@ -198,9 +198,10 @@ export class AppComponent {
   }
 
   changeBackground(background: string) {
-    document.body.style.background = `url(${background}), #f542ad`;
-    document.body.style.backgroundSize = 'cover';
-    document.body.style.transition = 'all 2s !important';
+    const body = document.body;
+    body.style.background = `#f542ad url(${background}) center`;
+    body.style.backgroundSize = 'cover';
+    body.style.transition = '2s all';
   }
 
   validateCnpj(cnpj: string) {

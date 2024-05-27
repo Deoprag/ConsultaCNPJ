@@ -1,16 +1,13 @@
 @import "primeicons/primeicons.css";
 @import url('https://fonts.googleapis.com/css2?family=Smooch+Sans:wght@100..900&display=swap');
 
-/* You can add global styles to this file, and also import other style files */
 * {
   margin: 0;
   padding: 0;
 }
 
 body {
-  background: url("assets/barbie-swan-lake.jpg"), #f542ad;
-  background-size: cover;
-  transition: 2s all !important;
+  background: #f542ad url("assets/barbie-swan-lake.jpg") center;
   font-family: 'Smooch Sans', sans-serif;
 }
 
