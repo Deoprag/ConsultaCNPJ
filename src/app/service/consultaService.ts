@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Consulta} from "../model/consulta";
+import { MessageService } from "primeng/api";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class ConsultaService {
 
   constructor(private http: HttpClient) {}
 
-  async consultar(cnpj: string): Promise<Consulta> {
+  async consultar(cnpj: string, messageService: MessageService): Promise<Consulta> {
     return await this.http.get(`${this.url1 + cnpj}`).toPromise()
       .then((data: any) => {
         let consulta = new Consulta();
@@ -22,20 +23,30 @@ export class ConsultaService {
         consulta.atividade_principal = data.estabelecimento.atividade_principal.descricao;
         consulta.atividades_secundarias = data.estabelecimento.atividades_secundarias.map((atividade: any) => '' + atividade.descricao);
         consulta.endereco = `${data.estabelecimento.tipo_logradouro} ${data.estabelecimento.logradouro}, N° ${data.estabelecimento.numero}, ${data.estabelecimento.bairro}, ${data.estabelecimento.cidade.nome} - ${data.estabelecimento.estado.nome}, CEP: ${data.estabelecimento.cep}`;
-        consulta.telefone = `${data.estabelecimento.ddd1}${data.estabelecimento.telefone1}`;
+        consulta.telefone = `${data.estabelecimento.ddd1 != null ? data.estabelecimento.ddd1 : null}${data.estabelecimento.telefone1 != null ? data.estabelecimento.telefone1 : ''}`;
         consulta.email = data.estabelecimento.email;
         consulta.situacao = data.estabelecimento.situacao_cadastral;
         consulta.data_situacao = data.estabelecimento.data_situacao_cadastral;
         consulta.data_abertura = data.estabelecimento.data_inicio_atividade;
         consulta.porte = data.porte.descricao;
         consulta.ultima_atualizacao = data.atualizado_em;
+        console.log(consulta.telefone)
         return consulta;
       }).catch(error => {
-        return this.consultar2(cnpj);
+        if (error.status === 404) {
+          messageService.add({ severity: 'error', summary: 'ERRO...', detail: 'CNPJ Não encontrado!' });
+        } else if (error.status === 429) {
+          messageService.add({ severity: 'warn', summary: 'OPS...', detail: 'Aguarde para realizar uma nova consulta!' });
+        } else if (error.status === 504) {
+          messageService.add({ severity: 'error', summary: 'ERRO...', detail: 'Serviço indisponível no momento!' });
+        } else {
+          // return this.consultar2(cnpj, messageService);
+        }
+        throw error;
       });
   }
 
-  async consultar2(cnpj: string): Promise<Consulta> {
+  async consultar2(cnpj: string, messageService: MessageService): Promise<Consulta> {
     return await this.http.get(`${this.url2 + cnpj}`).toPromise()
       .then((data: any) => {
         let consulta = new Consulta();
@@ -56,9 +67,9 @@ export class ConsultaService {
         return consulta;
       }).catch(error => {
         if (error.status === 429) {
-          alert('Aguarde para realizar uma nova consulta.');
+          messageService.add({ severity: 'warn', summary: 'OPS...', detail: 'Aguarde para realizar uma nova consulta!' });
         } else if (error.status === 504) {
-          alert('Serviço indisponível no momento.');
+          messageService.add({ severity: 'error', summary: 'ERRO...', detail: 'Serviço indisponível no momento!' });
         }
         throw error;
       });

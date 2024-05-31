@@ -61,12 +61,12 @@ import {NgForOf} from "@angular/common";
         <p-divider></p-divider>
         <div class="flex align-items-center gap-2 mt-3 mb-3 flex-wrap">
           <label for="telefone" class="font-semibold">Telefone</label>
-          <label id="telefone" class="text-md w-full">{{ formatNumber(consulta.telefone) }}</label>
+          <label id="telefone" class="text-md w-full">{{ (consulta.telefone.length < 9 ? '-' : formatNumber(consulta.telefone)) }}</label>
         </div>
         <p-divider></p-divider>
         <div class="flex align-items-center gap-2 mt-3 mb-3 flex-wrap">
           <label for="telefone" class="font-semibold">Email</label>
-          <label id="telefone" class="text-md w-full">{{ consulta.email }}</label>
+          <label id="telefone" class="text-md w-full">{{ consulta.email == null ? '-' : consulta.email }}</label>
         </div>
         <p-divider></p-divider>
         <div class="flex align-items-center gap-2 mt-3 mb-3 flex-wrap">
@@ -195,11 +195,10 @@ export class AppComponent {
     this.loading = true;
     if (this.validateCnpj(this.cnpj)) {
       try {
-        this.consulta = await this.consultaService.consultar(this.cnpj);
+        this.consulta = await this.consultaService.consultar(this.cnpj, this.messageService);
         this.showDialog();
         this.loading = false;
       } catch (error) {
-        this.showWarning('Aguarde 1 minuto para consultar novamente');
         this.loading = false;
       }
     } else {
@@ -269,12 +268,28 @@ export class AppComponent {
   }
 
   formatNumber(phone: string): string {
-    const digitos = phone.replace(/\D/g, '');
+    const digitos = phone.replace(/\D/g, ''); // Remove qualquer caracter que não seja um dígito
 
-    if (digitos.length === 11) {
-      return `(${digitos.slice(0, 2)}) ${digitos.slice(2, 7)}-${digitos.slice(7)}`;
+    if (digitos.length === 12) {
+      return `(${digitos.slice(0, 3)}) ${digitos.slice(3, 8)}-${digitos.slice(8)}`;
+
+    } else if (digitos.length === 11) {
+      if (digitos.charAt(0) === '0') {
+        return `(${digitos.slice(0, 3)}) ${digitos.slice(3, 7)}-${digitos.slice(7)}`;
+
+      } else {
+        return `(${digitos.slice(0, 2)}) ${digitos.slice(2, 7)}-${digitos.slice(7)}`;
+
+      }
+    } else if (digitos.length === 10) {
+      if (digitos.charAt(0) === '0') {
+        return `(${digitos.slice(0, 3)}) ${digitos.slice(3, 7)}-${digitos.slice(7)}`;
+      } else {
+        return `(${digitos.slice(0, 2)}) ${digitos.slice(2, 6)}-${digitos.slice(6)}`;
+      }
+
     } else {
-      return `(${digitos.slice(0, 2)}) ${digitos.slice(2, 6)}-${digitos.slice(6)}`;
+      return phone;
     }
   }
 
