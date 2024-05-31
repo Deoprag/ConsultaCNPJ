@@ -11,6 +11,7 @@ import {provideAnimations} from "@angular/platform-browser/animations";
 import {DialogModule} from "primeng/dialog";
 import {Consulta} from "./model/consulta";
 import {DividerModule} from "primeng/divider";
+import {NgForOf} from "@angular/common";
 
 @Component({
   selector: 'main-component',
@@ -23,7 +24,8 @@ import {DividerModule} from "primeng/divider";
     HttpClientModule,
     ToastModule,
     DialogModule,
-    DividerModule
+    DividerModule,
+    NgForOf
   ],
   template: `
     <p-toast/>
@@ -44,7 +46,7 @@ import {DividerModule} from "primeng/divider";
         <p-divider></p-divider>
         <div class="flex align-items-center gap-2 mt-3 mb-3 flex-wrap">
           <label for="nome_fantasia" class="font-semibold">Nome Fantasia</label>
-          <label id="nome_fantasia" class="text-md w-full">{{ consulta.nome_fantasia }}</label>
+          <label id="nome_fantasia" class="text-md w-full">{{ (consulta.nome_fantasia == null ? '-' : consulta.nome_fantasia) }}</label>
         </div>
         <p-divider></p-divider>
         <div class="flex align-items-center gap-2 mt-3 mb-3 flex-wrap">
@@ -84,7 +86,12 @@ import {DividerModule} from "primeng/divider";
         <p-divider></p-divider>
         <div class="flex align-items-center gap-2 mt-3 mb-3 flex-wrap">
           <label for="atividades_secundarias" class="font-semibold">Atividades Secundárias</label>
-          <label id="atividades_secundarias" class="text-md w-full">{{ consulta.atividades_secundarias }}</label>
+          <ul id="atividades_secundarias" class="text-md w-full">
+            <li class="mt-2" *ngFor="let atividade of consulta.atividades_secundarias">
+              <i class="pi pi-angle-right"></i>
+              {{ atividade + ';' }}
+            </li>
+          </ul>
         </div>
         <p-divider></p-divider>
         <div class="flex align-items-center gap-2 mt-3 mb-3 flex-wrap">
@@ -153,17 +160,21 @@ export class AppComponent {
   loading: boolean = false;
   visible: boolean = false;
   consulta: Consulta = new Consulta();
-  backgrounds: string[] = ['../assets/barbie-fairy.jpg', '../assets/barbie-three-musketeers.jpg',  '../assets/barbie-magic-pegasus.jpg',  '../assets/barbie-diamond-castle.jpg', '../assets/barbie.jpg', '../assets/barbie-swan-lake.jpg'];
+  backgrounds: string[] = ['../assets/barbie-fairy.jpg', '../assets/barbie-princess-power.jpg', '../assets/barbie-secret-door.jpg', '../assets/barbie-three-musketeers.jpg',  '../assets/barbie-magic-pegasus.jpg',  '../assets/barbie-diamond-castle.jpg', '../assets/barbie.jpg', '../assets/barbie-swan-lake.jpg'];
   i: number = 0;
 
   constructor(private messageService: MessageService, private consultaService: ConsultaService) {
+    this.startAnimation();
+  }
+
+  startAnimation() {
     setInterval(() => {
       if (this.i === this.backgrounds.length) {
         this.i = 0
       }
       this.changeBackground(this.backgrounds[this.i]);
       this.i++;
-    }, 20000);
+    }, 10 * 1000);
   }
 
   showError(message: string) {
@@ -198,10 +209,9 @@ export class AppComponent {
   }
 
   changeBackground(background: string) {
-    const body = document.body;
-    body.style.background = `#f542ad url(${background}) center`;
-    body.style.backgroundSize = 'cover';
-    body.style.transition = '2s all';
+    document.body.style.background = `#f542ad url(${background})`;
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.transition = '3.0s ease-in-out';
   }
 
   validateCnpj(cnpj: string) {

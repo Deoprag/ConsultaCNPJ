@@ -7,7 +7,8 @@
 }
 
 body {
-  background: #f542ad url("assets/barbie-swan-lake.jpg") center;
+  background: #f542ad url("assets/barbie-swan-lake.jpg");
+  background-size: cover;
   font-family: 'Smooch Sans', sans-serif;
 }
 
