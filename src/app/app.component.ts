@@ -65,8 +65,8 @@ import {NgForOf} from "@angular/common";
         </div>
         <p-divider></p-divider>
         <div class="flex align-items-center gap-2 mt-3 mb-3 flex-wrap">
-          <label for="telefone" class="font-semibold">Email</label>
-          <label id="telefone" class="text-md w-full">{{ consulta.email == null ? '-' : consulta.email }}</label>
+          <label for="email" class="font-semibold">Email</label>
+          <label id="email" class="text-md w-full">{{ consulta.email == null ? '-' : consulta.email }}</label>
         </div>
         <p-divider></p-divider>
         <div class="flex align-items-center gap-2 mt-3 mb-3 flex-wrap">
@@ -193,7 +193,10 @@ export class AppComponent {
     this.cnpj = this.cnpj.replace(/[^\d]/g, ''); // Remove caracteres não numéricos
 
     this.loading = true;
-    if (this.validateCnpj(this.cnpj)) {
+    if (this.cnpj.length < 13) {
+      this.showWarning('Preencha o campo inteiro.');
+      this.loading = false;
+    } else if (this.validateCnpj(this.cnpj)) {
       try {
         this.consulta = await this.consultaService.consultar(this.cnpj, this.messageService);
         this.showDialog();
