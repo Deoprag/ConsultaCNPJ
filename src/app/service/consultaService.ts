@@ -28,9 +28,8 @@ export class ConsultaService {
         consulta.situacao = data.estabelecimento.situacao_cadastral;
         consulta.data_situacao = data.estabelecimento.data_situacao_cadastral;
         consulta.data_abertura = data.estabelecimento.data_inicio_atividade;
-        consulta.porte = data.porte.descricao;
+        consulta.porte = `${data.porte.descricao} - ${data.natureza_juridica.descricao}`;
         consulta.ultima_atualizacao = data.atualizado_em;
-        console.log(consulta.telefone)
         return consulta;
       }).catch(error => {
         if (error.status === 404) {
