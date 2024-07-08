@@ -117,7 +117,7 @@ import {NgForOf} from "@angular/common";
           <p-inputMask
             mask="99.999.999/9999-99"
             id="cnpj"
-            type="number"
+            type="text"
             aria-describedby="cnpj-help"
             [(ngModel)]="cnpj"
             [style]="{
